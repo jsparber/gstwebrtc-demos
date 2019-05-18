@@ -61,6 +61,7 @@ http://blog.nirbheek.in/2018/02/gstreamer-webrtc.html
 ### sendrecv: Send and receive audio and video
 
 * Serve the `js/` directory on the root of your website, or open https://webrtc.nirbheek.in
+  - You can serve it with `twistd`, install it with `pip install twistd` and run it from the main folder `twistd -no web --path sendrecv/js/ -c signalling/cert.pem -k signalling/key.pem --https=443`
   - The JS code assumes the signalling server is on port 8443 of the same server serving the HTML
 
 * Open the website in a browser and ensure that the status is "Registered with server, waiting for call", and note the `id` too.
