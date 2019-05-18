@@ -16,7 +16,9 @@ var default_peer_id;
 var rtc_configuration = {iceServers: [{urls: "stun:stun.services.mozilla.com"},
                                       {urls: "stun:stun.l.google.com:19302"}]};
 // The default constraints that will be attempted. Can be overriden by the user.
-var default_constraints = {video: true, audio: true};
+//var default_constraints = {video: true, audio: false};
+var default_constraints = {video: {mediaSource: 'screen'}};
+
 
 var connect_attempts = 0;
 var peer_connection;
@@ -175,7 +177,13 @@ function getLocalStream() {
 
     // Add local stream
     if (navigator.mediaDevices.getUserMedia) {
-        return navigator.mediaDevices.getUserMedia(constraints);
+        if (navigator.getDisplayMedia) {
+            return navigator.getDisplayMedia({video: true});
+        } else if (navigator.mediaDevices.getDisplayMedia) {
+            return navigator.mediaDevices.getDisplayMedia({video: true});
+        } else {
+            return navigator.mediaDevices.getUserMedia({video: {mediaSource: 'screen'}});
+        }
     } else {
         errorUserMediaHandler();
     }
